@@ -1,0 +1,19 @@
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: autocorp-web-ingress
+  namespace: autocorp
+  labels:
+    app: autocorp-web
+spec:
+  entryPoints:
+    - web # defined by traefik
+  routes:
+    - kind: Rule
+      match: Host(`autocorp.mike`)
+      services:
+        - kind: Service
+          name: autocorp-web-svc
+          port: 80

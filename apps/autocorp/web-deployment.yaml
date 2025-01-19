@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autocorp-web
+  namespace: autocorp
+  labels:
+    app: autocorp-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: autocorp-web
+  template:
+    metadata:
+      name: autocorp-web
+      labels:
+        app: autocorp-web
+    spec:
+      containers:
+        - name: autocorp-web
+          image: mikebarkas/auto-corp-web:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+              name: web
+      restartPolicy: Always
+
