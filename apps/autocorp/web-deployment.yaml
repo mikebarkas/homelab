@@ -6,7 +6,7 @@ metadata:
   labels:
     app: autocorp-web
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: autocorp-web
@@ -18,8 +18,12 @@ spec:
     spec:
       containers:
         - name: autocorp-web
-          image: mikebarkas/auto-corp-web:1.0
-          imagePullPolicy: IfNotPresent
+          # this still uses web.mikebarkas.com ?
+          image: mikebarkas/auto-corp-web:1.0@sha256:3bcdfb1fa0b9019da0e416303ac77424d0f426c4aa28eb3f76a1df4b69b67587
+          imagePullPolicy: Always
+          env:
+            - name: API_URL
+              value: "http://postgres.postgres.svc.cluster.local:5432"
           ports:
             - containerPort: 8081
               name: web
