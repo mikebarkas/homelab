@@ -18,12 +18,11 @@ spec:
     spec:
       containers:
         - name: autocorp-web
-          # this still uses web.mikebarkas.com ?
-          image: mikebarkas/auto-corp-web:1.0@sha256:3bcdfb1fa0b9019da0e416303ac77424d0f426c4aa28eb3f76a1df4b69b67587
-          imagePullPolicy: Always
+          image: mikebarkas/auto-corp-web:1.1
+          imagePullPolicy: IfNotPresent
           env:
             - name: API_URL
-              value: "http://postgres.postgres.svc.cluster.local:5432"
+              value: "url to api"
           ports:
             - containerPort: 8081
               name: web
