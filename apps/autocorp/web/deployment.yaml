@@ -22,7 +22,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: API_URL
-              value: "url to api"
+              value: "http://autocorp-api-svc/search"
           ports:
             - containerPort: 8081
               name: web
