@@ -6,7 +6,7 @@ metadata:
   labels:
     app: autocorp-web
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: autocorp-web
@@ -18,8 +18,11 @@ spec:
     spec:
       containers:
         - name: autocorp-web
-          image: mikebarkas/auto-corp-web:1.0
+          image: mikebarkas/auto-corp-web:1.1
           imagePullPolicy: IfNotPresent
+          env:
+            - name: API_URL
+              value: "http://autocorp-api-svc/search"
           ports:
             - containerPort: 8081
               name: web
