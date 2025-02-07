@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autocorp-api
+  namespace: autocorp
+  labels:
+    app: autocorp-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: autocorp-api
+  template:
+    metadata:
+      name: autocorp-api
+      labels:
+        app: autocorp-api
+    spec:
+      containers:
+        - name: autocorp-api
+          image: mikebarkas/auto-corp-api:0.4
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PGUSER
+              value: ""
+            - name: PGPASSWORD
+              value: ""
+            - name: PGHOST
+              value: "postgres.postgres.svc.cluster.local"
+            - name: PGPORT
+              value: "5432"
+            - name: PGDATABASE
+              value: "auto_db"
+          ports:
+            - containerPort: 8080
+              name: api
+      restartPolicy: Always
+

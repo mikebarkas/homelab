@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autocorp-web
+  namespace: autocorp
+  labels:
+    app: autocorp-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: autocorp-web
+  template:
+    metadata:
+      name: autocorp-web
+      labels:
+        app: autocorp-web
+    spec:
+      containers:
+        - name: autocorp-web
+          image: mikebarkas/auto-corp-web:1.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: API_URL
+              value: "http://autocorp-api-svc/search"
+          ports:
+            - containerPort: 8081
+              name: web
+      restartPolicy: Always
+
