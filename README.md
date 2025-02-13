@@ -11,7 +11,8 @@ the `dev` branch. As apps and systems are completed I merge into the `main` bran
 I am using a few Linux computers for hosting services and a k8s cluster. I am currently using k3s for my clusters.
 
 ### Apps
-The applications in my homelab are mostly for learning purposes. The apps I have written and run in a containers 
-in k8s.
+The applications in my homelab are for learning and experience with running custom containers in k8s.
 
 More information can be found for applications and services in each of the directories.
+
+[AutoCorp Project](https://github.com/mikebarkas/homelab/tree/main/apps/autocorp) - Python and Go application
