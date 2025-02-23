@@ -29,19 +29,3 @@ spec:
   resources:
     requests:
       storage: 400Mi
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: pg-init-pvc
-  namespace: postgres
-  labels:
-    app: postgres
-spec:
-  storageClassName: local-path
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 300Mi
