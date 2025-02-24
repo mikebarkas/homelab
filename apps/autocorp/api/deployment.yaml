@@ -16,23 +16,32 @@ spec:
       labels:
         app: autocorp-api
     spec:
+      initContainers:
+        - name: psql-init
+          image: alpine/psql
+          envFrom:
+            - secretRef:
+                name: initdb-credentials
+          command:
+            - 'sh'
+            - '-c'
+            - '/initdb/init.sh'
+          volumeMounts:
+            - name: init
+              mountPath: /initdb
+
       containers:
         - name: autocorp-api
           image: mikebarkas/auto-corp-api:0.4
           imagePullPolicy: IfNotPresent
-          env:
-            - name: PGUSER
-              value: ""
-            - name: PGPASSWORD
-              value: ""
-            - name: PGHOST
-              value: "postgres.postgres.svc.cluster.local"
-            - name: PGPORT
-              value: "5432"
-            - name: PGDATABASE
-              value: "auto_db"
+          envFrom:
+            - secretRef:
+                name: api-credentials
           ports:
             - containerPort: 8080
               name: api
       restartPolicy: Always
-
+      volumes:
+        - name: init
+          persistentVolumeClaim:
+            claimName: autocorp-api-init-pvc
