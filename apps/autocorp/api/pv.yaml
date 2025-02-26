@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: autocorp-api-init-pv
+  namespace: autocorp
+  labels:
+    type: local
+    app: autocorp-api
+spec:
+  storageClassName: local-path
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/k8s/postgres/init/autocorp"

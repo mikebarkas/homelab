@@ -31,8 +31,6 @@ spec:
               mountPath: /var/lib/postgresql/data
             - name: config
               mountPath: /config
-            - name: init
-              mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -40,8 +38,5 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: pg-config-pvc
-        - name: init
-          persistentVolumeClaim:
-            claimName: pg-init-pvc
       restartPolicy: Always
       
