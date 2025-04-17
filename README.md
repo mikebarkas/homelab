@@ -15,4 +15,6 @@ The applications in my homelab are for learning and experience with running cust
 
 More information can be found for applications and services in each of the directories.
 
-[AutoCorp Project](https://github.com/mikebarkas/homelab/tree/main/apps/autocorp) - Python and Go application
+[AutoCorp](https://github.com/mikebarkas/homelab/tree/main/apps/autocorp) - Python and Go web application
+
+[Stocker](https://github.com/mikebarkas/homelab/tree/main/apps/stocker) - Containerized Python k8s cronjob
