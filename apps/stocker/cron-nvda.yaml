@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cron-nvda
+  namespace: stocker
+spec:
+  schedule: "25 10,11,13,14 * * 1-5"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: nvda-cron
+              image: mikebarkas/homelab-stocker:amd64
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: stocker-env
+              env:
+                - name: STOCK_SYMBOL
+                  value: "NVDA"
+          restartPolicy: OnFailure
