@@ -18,3 +18,9 @@ More information can be found for applications and services in each of the direc
 [AutoCorp](https://github.com/mikebarkas/homelab/tree/main/apps/autocorp) - Python and Go web application
 
 [Stocker](https://github.com/mikebarkas/homelab/tree/main/apps/stocker) - Containerized Python k8s cronjob
+
+### Monitoring
+
+[Prometheus](https://github.com/mikebarkas/homelab/tree/main/monitoring/prometheus) - Prometheus monitoring running in a container.
+
+[Grafana](https://github.com/mikebarkas/homelab/tree/main/monitoring/grafana) - Grafana dashboard running in a container.
