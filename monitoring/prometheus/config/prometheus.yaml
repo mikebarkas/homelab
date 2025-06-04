@@ -1,0 +1,13 @@
+---
+global:
+  scrape_interval: 15s  # Default
+  # external_labels:
+  #  monitor: 'my-monitor'
+
+# Endpoint configurations:
+scrape_configs:
+  # Job name is added as a label `job=<job_name>`.
+  - job_name: 'prometheus'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9090']
