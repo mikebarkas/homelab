@@ -4,14 +4,15 @@ metadata:
   name: cron-abbv
   namespace: stocker
 spec:
-  schedule: "20 10,12,13,14 * * 1-5"
+  schedule: "20 10,12,14,15 * * 1-5"
+  timeZone: "America/New_York"
   jobTemplate:
     spec:
       template:
         spec:
           containers:
             - name: abbv-cron
-              image: mikebarkas/homelab-stocker:amd64
+              image: mikebarkas/homelab-stocker:1.0.0
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
