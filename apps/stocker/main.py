@@ -23,13 +23,15 @@ try:
         # c=current, d=change, dp=percent change, h=high, l=low, t=timestamp
         current = r["c"]
         change = r["d"]
-        dtime = datetime.datetime.fromtimestamp(r["t"])
-        time = dtime.strftime("%Y-%m-%d %H:%M:%S")
-        
+        # Finnhub t is a Unix timestamp; keep it in UTC and store as timestamptz.
+        dtime = datetime.datetime.fromtimestamp(r["t"], tz=datetime.timezone.utc)
+
         connection = pg8000.native.Connection(
             username, password=password, host=host, port=port, database=database, ssl_context=False)
-        sql_insert = "insert into stock (symbol, current, change, timestamp) values (:s, :c, :d, :t)"
-        connection.run(sql_insert, s=symbol, c=current, d=change, t=time)
+        # Pre-market and after-hours runs return the same t; skip those duplicates.
+        sql_insert = ("insert into stock (symbol, current, change, timestamp) values (:s, :c, :d, :t) "
+                      "on conflict (symbol, timestamp) do nothing")
+        connection.run(sql_insert, s=symbol, c=current, d=change, t=dtime)
         connection.close()
     else:
         print(f"Error in api: {response.status_code}")
