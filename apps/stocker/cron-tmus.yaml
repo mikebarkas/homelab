@@ -4,8 +4,10 @@ metadata:
   name: cron-tmus
   namespace: stocker
 spec:
-  schedule: "10 10,12,14,15 * * 1-5"
+  schedule: "25 10-16 * * 1-5"
   timeZone: "America/New_York"
+  startingDeadlineSeconds: 300
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:

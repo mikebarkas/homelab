@@ -4,8 +4,10 @@ metadata:
   name: cron-msft
   namespace: stocker
 spec:
-  schedule: "5 10,12,14,15 * * 1-5"
+  schedule: "15 10-16 * * 1-5"
   timeZone: "America/New_York"
+  startingDeadlineSeconds: 300
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
