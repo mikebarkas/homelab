@@ -4,14 +4,17 @@ metadata:
   name: cron-tmus
   namespace: stocker
 spec:
-  schedule: "10 10,12,13,15 * * 1-5"
+  schedule: "25 10-16 * * 1-5"
+  timeZone: "America/New_York"
+  startingDeadlineSeconds: 300
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
             - name: tmus-cron
-              image: mikebarkas/homelab-stocker:amd64
+              image: mikebarkas/homelab-stocker:1.0.0
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:

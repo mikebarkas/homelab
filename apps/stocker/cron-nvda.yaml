@@ -4,14 +4,17 @@ metadata:
   name: cron-nvda
   namespace: stocker
 spec:
-  schedule: "25 10,11,13,14 * * 1-5"
+  schedule: "20 10-16 * * 1-5"
+  timeZone: "America/New_York"
+  startingDeadlineSeconds: 300
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           containers:
             - name: nvda-cron
-              image: mikebarkas/homelab-stocker:amd64
+              image: mikebarkas/homelab-stocker:1.0.0
               imagePullPolicy: IfNotPresent
               envFrom:
                 - secretRef:
