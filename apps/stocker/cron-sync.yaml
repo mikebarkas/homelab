@@ -1,0 +1,50 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: stocker-sync
+  namespace: stocker
+spec:
+  # After the collectors (:05-:25 past each hour, 10:00-16:25 ET).
+  schedule: "40 10-16 * * 1-5"
+  timeZone: "America/New_York"
+  startingDeadlineSeconds: 300
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: stocker-sync
+              image: ghcr.io/mikebarkas/stocker-sync:0.1.0
+              imagePullPolicy: IfNotPresent
+              envFrom:
+                - secretRef:
+                    name: stocker-sync-env
+              env:
+                - name: TARGET_SSLROOTCERT
+                  value: "/etc/supabase/supabase-ca.crt"
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                - name: supabase-ca
+                  mountPath: /etc/supabase
+                  readOnly: true
+          volumes:
+            - name: supabase-ca
+              configMap:
+                name: supabase-ca
+          # Never (not OnFailure) so each retry is a new pod and failed logs are kept.
+          restartPolicy: Never
